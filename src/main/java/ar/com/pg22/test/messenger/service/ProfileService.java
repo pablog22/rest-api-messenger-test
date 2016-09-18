@@ -13,15 +13,18 @@ import ar.com.pg22.test.messenger.model.Profile;
 public class ProfileService {
 	
 	final static Logger logger = LogManager.getLogger(ProfileService.class);
-		
-	private Map<String, Profile> profiles = DatabaseClass.getProfiles();
+
+	private Map<String, Profile> profiles;
 	
-	public ProfileService() {
-		logger.debug("Calling ProfileService constructor.");
+	public ProfileService(DatabaseClass database) {
+		logger.debug("Initialising ProfileService - Start.");
+		this.profiles = database.getProfiles();
+		
 		if (profiles.isEmpty()) {
 			logger.debug("Adding dummy profiles.");
 			profiles.put("koushik", new Profile(1L, "koushik", "Koushik", "Kothagal"));
 		}
+		logger.debug("Initialising ProfileService - End.");
 	}
 	
 	public List<Profile> getAllProfiles() {

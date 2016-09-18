@@ -12,15 +12,20 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import ar.com.pg22.test.messenger.model.Profile;
 import ar.com.pg22.test.messenger.service.ProfileService;
 
+@Component
 @Path("/profiles")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ProfileResource {
 
-	private ProfileService profileService = new ProfileService();
+	@Autowired
+	private ProfileService profileService;
 	
 	@GET
 	public List<Profile> getProfiles() {
