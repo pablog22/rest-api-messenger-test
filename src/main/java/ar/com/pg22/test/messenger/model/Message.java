@@ -2,11 +2,22 @@ package ar.com.pg22.test.messenger.model;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+@Document(collection = "messeges")
 public class Message {
 	
+	@Id
 	private long id;
+	
     private String message;
+    
+    @DateTimeFormat(iso = ISO.DATE_TIME)
     private Date created;
+    
     private String author;
     
     public Message() {

@@ -8,6 +8,7 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd" >
 	
+	<context:component-scan base-package="ar.com.pg22.test.messenger.database" />
 	<context:component-scan base-package="ar.com.pg22.test.messenger.resources" />
 	
 	<bean id="database" class="ar.com.pg22.test.messenger.database.DatabaseClass"></bean>

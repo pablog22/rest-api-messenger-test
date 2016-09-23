@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
 
 import ar.com.pg22.test.messenger.database.DatabaseClass;
 import ar.com.pg22.test.messenger.model.Message;
@@ -13,6 +15,9 @@ import ar.com.pg22.test.messenger.model.Message;
 public class MessageService {
 	
 	final static Logger logger = LogManager.getLogger(MessageService.class);
+	
+	@Autowired
+	private MongoOperations mongoOps;
 	
 	private Map<Long, Message> messages;
 	
@@ -46,6 +51,8 @@ public class MessageService {
 		logger.debug("New message id is {}", message.getId());
 		messages.put(message.getId(), message);
 		logger.debug("Messages addition finished.");
+		
+		mongoOps.save(message);
 		return message;
 	}
 	

@@ -84,11 +84,20 @@
 			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 	    </dependency>
+	    
+	    <!-- Spring Data MongoDB -->
+	    <dependency>
+	        <groupId>org.springframework.data</groupId>
+	        <artifactId>spring-data-mongodb</artifactId>
+	        <version>${springdata.version}</version>
+	    </dependency>
         
     </dependencies>
+    
     <properties>
         <jersey.version>2.23.2</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>3.2.3.RELEASE</spring.version>
+        <springdata.version>1.9.3.RELEASE</springdata.version>
     </properties>
 </project>
