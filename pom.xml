@@ -98,6 +98,6 @@
         <jersey.version>2.23.2</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>3.2.3.RELEASE</spring.version>
-        <springdata.version>1.9.3.RELEASE</springdata.version>
+        <springdata.version>1.5.5.RELEASE</springdata.version>
     </properties>
 </project>
