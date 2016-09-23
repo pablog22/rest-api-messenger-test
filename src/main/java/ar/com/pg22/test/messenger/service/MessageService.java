@@ -1,8 +1,10 @@
 package ar.com.pg22.test.messenger.service;
 
-import java.util.ArrayList;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Update.update;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,54 +21,60 @@ public class MessageService {
 	@Autowired
 	private MongoOperations mongoOps;
 	
-	private Map<Long, Message> messages;
+	//private Map<Long, Message> messages;
 	
 	public MessageService(DatabaseClass database) {
 		logger.debug("Initialising MessageService - Start.");
-		this.messages = database.getMessages();
-		
-		if (messages.isEmpty()) {
-			logger.debug("Adding dummy messages.");
-			messages.put(1L, new Message(1, "Hello World", "koushik"));
-			messages.put(2L, new Message(2, "Hello Jersey", "koushik"));
-		}
+//		this.messages = database.getMessages();
+//		
+//		if (messages.isEmpty()) {
+//			logger.debug("Adding dummy messages.");
+//			messages.put(1L, new Message(1, "Hello World", "koushik"));
+//			messages.put(2L, new Message(2, "Hello Jersey", "koushik"));
+//		}
 		
 		logger.debug("Initialising MessageService - End.");
 	}
 	
 	public List<Message> getAllMessages() {
 		logger.debug("Getting all messages.");
-		return new ArrayList<Message>(messages.values()); 
+		return mongoOps.findAll(Message.class);
+		//return new ArrayList<Message>(messages.values()); 
 	}
 	
 	public Message getMessage(long id) {
 		logger.debug("Geting message id {}.", id);
-		Message message = messages.get(id);
-		return message;
+		return mongoOps.findById(id, Message.class);
+		//Message message = messages.get(id);
+		//return message;
 	}
 	
 	public Message addMessage(Message message) {
 		logger.debug("Adding new message from author {}.", message.getAuthor());
-		message.setId(messages.size() + 1);
+		//message.setId(messages.size() + 1);
 		logger.debug("New message id is {}", message.getId());
-		messages.put(message.getId(), message);
+		//messages.put(message.getId(), message);
+		mongoOps.insert(message);
 		logger.debug("Messages addition finished.");
-		
-		mongoOps.save(message);
 		return message;
 	}
 	
 	public Message updateMessage(Message message) {
 		logger.debug("Updating message id {}.", message.getId());
-		if (message.getId() <= 0) {
-			return null;
-		}
-		messages.put(message.getId(), message);
+//		if (message.getId() <= 0) {
+//			return null;
+//		}
+//		messages.put(message.getId(), message);
+		// TODO This is an upsert, it does not check if the object already exists
+		mongoOps.save(message);
 		return message;
 	}
 	
 	public Message removeMessage(long id) {
 		logger.debug("Removing message id {}.", id);
-		return messages.remove(id);
+		Message oldMessage = getMessage(id);
+		mongoOps.remove(query(where("id").is(id)));
+		return oldMessage;
+		//return messages.remove(id);
 	}
 }
