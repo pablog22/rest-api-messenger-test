@@ -2,9 +2,7 @@ package ar.com.pg22.test.messenger.model;
 
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
 public class Profile {
 
 	private long id;
@@ -14,7 +12,7 @@ public class Profile {
     private Date created;
     
     public Profile() {
-    	
+    	super();
     }
     
 	public Profile(long id, String profileName, String firstName, String lastName) {

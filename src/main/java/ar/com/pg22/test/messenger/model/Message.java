@@ -2,9 +2,6 @@ package ar.com.pg22.test.messenger.model;
 
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class Message {
 	
 	private long id;
