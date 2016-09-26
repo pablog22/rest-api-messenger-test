@@ -3,23 +3,31 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-3.0.xsd" >
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/data/mongo
+    http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd" >
 	
-	<context:component-scan base-package="ar.com.pg22.test.messenger.database" />
+	
 	<context:component-scan base-package="ar.com.pg22.test.messenger.resources" />
 	
+	<!-- Database -->
+	<context:component-scan base-package="ar.com.pg22.test.messenger.database" />
+	<mongo:repositories base-package="ar.com.pg22.test.messenger.database.repositories" />
 	<bean id="database" class="ar.com.pg22.test.messenger.database.DatabaseClass"></bean>
+	<bean id="messageDao" class="ar.com.pg22.test.messenger.database.MessageDao"></bean>
+	
+	<!-- Services -->
 	<bean id="messageService" class="ar.com.pg22.test.messenger.service.MessageService">
-		<constructor-arg>
-			<ref bean="database"/>
-		</constructor-arg>
 	</bean>
 	<bean id="profileService" class="ar.com.pg22.test.messenger.service.ProfileService">
 		<constructor-arg>
 			<ref bean="database"/>
 		</constructor-arg>
 	</bean>
+	
+	<mongo:repositories base-package="ar.com.pg22.test.messenger.database.repositories" />
 </beans>
