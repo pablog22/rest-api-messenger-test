@@ -17,17 +17,12 @@
 	<!-- Database -->
 	<context:component-scan base-package="ar.com.pg22.test.messenger.database" />
 	<mongo:repositories base-package="ar.com.pg22.test.messenger.database.repositories" />
-	<bean id="database" class="ar.com.pg22.test.messenger.database.DatabaseClass"></bean>
 	<bean id="messageDao" class="ar.com.pg22.test.messenger.database.MessageDao"></bean>
+	<bean id="profileDao" class="ar.com.pg22.test.messenger.database.ProfileDao"></bean>
 	
 	<!-- Services -->
-	<bean id="messageService" class="ar.com.pg22.test.messenger.service.MessageService">
-	</bean>
-	<bean id="profileService" class="ar.com.pg22.test.messenger.service.ProfileService">
-		<constructor-arg>
-			<ref bean="database"/>
-		</constructor-arg>
-	</bean>
+	<bean id="messageService" class="ar.com.pg22.test.messenger.service.MessageService"></bean>
+	<bean id="profileService" class="ar.com.pg22.test.messenger.service.ProfileService"></bean>
 	
 	<mongo:repositories base-package="ar.com.pg22.test.messenger.database.repositories" />
 </beans>
