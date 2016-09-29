@@ -34,7 +34,8 @@ public class MessageService {
 	public List<Message> getAllMessages() {
 		logger.debug("Getting all messages.");
 		return messageDao.getAllMessages();
-		//return new ArrayList<Message>(messages.values()); 
+		//return new ArrayList<Message>(messages.values());
+		
 	}
 	
 	public Message getMessage(long id) {
@@ -45,11 +46,9 @@ public class MessageService {
 	}
 	
 	public Message addMessage(Message message) {
-		// TODO handle sequence ids
 		logger.debug("Adding new message from author {}.", message.getAuthor());
-		//message.setId(messages.size() + 1);
+		message.setId(messageDao.getNewMessageId());
 		logger.debug("New message id is {}", message.getId());
-		//messages.put(message.getId(), message);
 		Message newMessage = messageDao.saveMessage(message);
 		logger.debug("Messages addition finished.");
 		return newMessage;
