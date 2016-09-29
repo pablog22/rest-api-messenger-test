@@ -18,11 +18,6 @@ public class ProfileService {
 	
 	public ProfileService() {
 		logger.debug("Initialising ProfileService - Start.");
-//		this.profiles = database.getProfiles();
-//		if (profiles.isEmpty()) {
-//			logger.debug("Adding dummy profiles.");
-//			profiles.put("koushik", new Profile(1L, "koushik", "Koushik", "Kothagal"));
-//		}
 		logger.debug("Initialising ProfileService - End.");
 	}
 	
@@ -38,8 +33,6 @@ public class ProfileService {
 	
 	public Profile addProfile(Profile profile) {
 		logger.debug("Adding new profile with name {}.", profile.getProfileName());
-//		profile.setId(profiles.size() + 1);
-//		logger.debug("New message id is {}", profile.getId());
 		Profile newProfile = profileDao.saveProfile(profile);
 		logger.debug("Profile addition finished.");
 		return newProfile;

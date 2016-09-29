@@ -16,33 +16,20 @@ public class MessageService {
 	@Autowired
 	private MessageDao messageDao;
 	
-	//private Map<Long, Message> messages;
-	
 	public MessageService() {
 		logger.debug("Initialising MessageService - Start.");
-//		this.messages = database.getMessages();
-//		
-//		if (messages.isEmpty()) {
-//			logger.debug("Adding dummy messages.");
-//			messages.put(1L, new Message(1, "Hello World", "koushik"));
-//			messages.put(2L, new Message(2, "Hello Jersey", "koushik"));
-//		}
-		
 		logger.debug("Initialising MessageService - End.");
 	}
 	
 	public List<Message> getAllMessages() {
 		logger.debug("Getting all messages.");
 		return messageDao.getAllMessages();
-		//return new ArrayList<Message>(messages.values());
 		
 	}
 	
 	public Message getMessage(long id) {
 		logger.debug("Geting message id {}.", id);
 		return messageDao.getMessage(id);
-		//Message message = messages.get(id);
-		//return message;
 	}
 	
 	public Message addMessage(Message message) {
@@ -59,7 +46,7 @@ public class MessageService {
 		if (message.getId() <= 0) {
 			return null;
 		}
-//		messages.put(message.getId(), message);
+
 		// TODO This is an upsert, it does not check if the object already exists
 		Message updatedMessage = messageDao.saveMessage(message);
 		return updatedMessage;
@@ -70,6 +57,5 @@ public class MessageService {
 		Message oldMessage = getMessage(id);
 		messageDao.removeMessage(id);
 		return oldMessage;
-		//return messages.remove(id);
 	}
 }
