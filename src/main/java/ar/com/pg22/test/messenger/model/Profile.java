@@ -1,33 +1,32 @@
 package ar.com.pg22.test.messenger.model;
 
+import static ar.com.pg22.test.messenger.util.DateUtil.getNewDate;
+
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+@Document(collection = "profiles")
 public class Profile {
 
-	private long id;
+	@Id
     private String profileName;
+	
     private String firstName;
+    
     private String lastName;
+    
+    @DateTimeFormat(iso = ISO.DATE_TIME)
     private Date created;
     
     public Profile() {
     	super();
+    	this.created = getNewDate();
     }
-    
-	public Profile(long id, String profileName, String firstName, String lastName) {
-		this.id = id;
-		this.profileName = profileName;
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
 
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
 	public String getProfileName() {
 		return profileName;
 	}
