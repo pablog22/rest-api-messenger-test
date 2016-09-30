@@ -27,6 +27,17 @@ public class MessageService {
 		
 	}
 	
+	public List<Message> getAllMessagesForYear(int year) {
+		logger.debug("Getting all messages for year {}.", year);
+		return messageDao.getAllMessagesForYear(year);
+		
+	}
+	
+	public List<Message> getAllMessagesPaginated(int page, int size) {
+		logger.debug("Getting all messages paginated for page: {} and size: {}.", page, size);
+		return messageDao.getAllMessagesPaginated(page, size);
+	}
+	
 	public Message getMessage(long id) {
 		logger.debug("Geting message id {}.", id);
 		return messageDao.getMessage(id);

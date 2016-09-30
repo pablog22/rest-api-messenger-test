@@ -10,6 +10,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.logging.log4j.LogManager;
@@ -36,7 +37,17 @@ public class MessageResource {
 	private MessageService messageService;
 	
 	@GET
-	public List<Message> getMessages(){
+	public List<Message> getMessages(
+			@QueryParam("year") int year,
+			@QueryParam("page") int page,
+			@QueryParam("size") int size){
+		if (year > 0) {
+			return messageService.getAllMessagesForYear(year);
+		}
+		if (page >= 0 && size > 0) {
+			return messageService.getAllMessagesPaginated(page, size);
+		}
+		
 		return messageService.getAllMessages();
 	}
 	

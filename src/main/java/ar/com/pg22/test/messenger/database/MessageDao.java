@@ -1,8 +1,15 @@
 package ar.com.pg22.test.messenger.database;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Update.update;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
@@ -11,6 +18,7 @@ import com.google.common.collect.Lists;
 
 import ar.com.pg22.test.messenger.database.repositories.MessageRepository;
 import ar.com.pg22.test.messenger.model.Message;
+import ar.com.pg22.test.messenger.util.DateUtil;
 
 public class MessageDao {
 	
@@ -31,6 +39,17 @@ public class MessageDao {
 	public List<Message> getAllMessages(){
 		List<Message> allMessages = Lists.newArrayList(repository.findAll());
 		return allMessages;
+	}
+	
+	public List<Message> getAllMessagesForYear(int year) {
+		Date startDate = DateUtil.getFirstDayOfYear(year);
+		Date endDate = DateUtil.getFirstDayOfYear(year + 1);
+		return mongoOps.find(query(where("created").gte(startDate).lt(endDate)), Message.class);
+	}
+	
+	public List<Message> getAllMessagesPaginated(int page, int size) {
+		Page<Message> result = repository.findAll(new PageRequest(page, size));
+		return result.getContent();
 	}
 	
 	public Message getMessage(long id) {
