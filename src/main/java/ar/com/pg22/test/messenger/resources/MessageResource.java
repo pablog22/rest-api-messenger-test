@@ -79,7 +79,13 @@ public class MessageResource {
 	
 	@GET
 	@Path("/{messageId}")
-	public Message test(@PathParam("messageId") long id){
+	public Message getMessage(@PathParam("messageId") long id){
 		return messageService.getMessage(id);
+	}
+	
+	@Path("/{messageId}/comments")
+	public CommentResource getCommentResource(){
+		System.out.println("will create comment resource");
+		return new CommentResource();
 	}
 }
