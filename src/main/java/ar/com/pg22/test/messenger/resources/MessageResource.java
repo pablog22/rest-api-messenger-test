@@ -2,6 +2,7 @@ package ar.com.pg22.test.messenger.resources;
 
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ar.com.pg22.test.messenger.model.Message;
+import ar.com.pg22.test.messenger.resources.beans.MessagePageBean;
 import ar.com.pg22.test.messenger.service.MessageService;
 
 @Component
@@ -38,14 +40,20 @@ public class MessageResource {
 	
 	@GET
 	public List<Message> getMessages(
-			@QueryParam("year") int year,
-			@QueryParam("page") int page,
-			@QueryParam("size") int size){
+			@QueryParam("year") int year){
+		
 		if (year > 0) {
 			return messageService.getAllMessagesForYear(year);
 		}
-		if (page >= 0 && size > 0) {
-			return messageService.getAllMessagesPaginated(page, size);
+		
+		return messageService.getAllMessages();
+	}
+	
+	@GET
+	@Path("paged")
+	public List<Message> getMessagesPaged(@BeanParam MessagePageBean pageBean){
+		if (pageBean.getPage() >= 0 && pageBean.getSize() > 0) {
+			return messageService.getAllMessagesPaginated(pageBean.getPage(), pageBean.getSize());
 		}
 		
 		return messageService.getAllMessages();
