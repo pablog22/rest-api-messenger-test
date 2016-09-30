@@ -4,8 +4,19 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
+
+@Component
 @Path("/")
 public class CommentResource {
+	
+	final static Logger logger = LogManager.getLogger(CommentResource.class);
+	
+	public CommentResource() {
+		logger.debug("Initialising CommentResource.");
+	}
 	
 	@GET
 	public String getComments(@PathParam("messageId") long id){

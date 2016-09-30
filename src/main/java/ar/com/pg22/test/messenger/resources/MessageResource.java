@@ -36,6 +36,9 @@ public class MessageResource {
 	}
 	
 	@Autowired
+	private CommentResource commentResource;
+	
+	@Autowired
 	private MessageService messageService;
 	
 	@GET
@@ -85,7 +88,6 @@ public class MessageResource {
 	
 	@Path("/{messageId}/comments")
 	public CommentResource getCommentResource(){
-		System.out.println("will create comment resource");
-		return new CommentResource();
+		return commentResource;
 	}
 }
