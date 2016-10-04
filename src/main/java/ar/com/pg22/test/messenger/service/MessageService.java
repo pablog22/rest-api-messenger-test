@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.com.pg22.test.messenger.database.MessageDao;
+import ar.com.pg22.test.messenger.exception.DataNotFoundException;
 import ar.com.pg22.test.messenger.model.Message;
 
 public class MessageService {
@@ -40,6 +41,10 @@ public class MessageService {
 	
 	public Message getMessage(long id) {
 		logger.debug("Geting message id {}.", id);
+		Message message = messageDao.getMessage(id);
+		if (message == null) {
+			throw new DataNotFoundException("Message with id " + id + " not found");
+		}
 		return messageDao.getMessage(id);
 	}
 	
